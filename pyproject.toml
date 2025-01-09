@@ -1,0 +1,35 @@
+[project]
+name = "stratus-core"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi[all]>=0.115.6",
+    "llama-index-readers-github>=0.5.0",
+    "llama-index>=0.12.8",
+    "sqlmodel>=0.0.22",
+    "uvicorn>=0.34.0",
+    "llama-index-embeddings-ollama>=0.5.0",
+    "llama-index-llms-ollama>=0.5.0",
+    "pydantic>=2.10.4",
+    "llama-index-readers-database>=0.3.0",
+    "chromadb>=0.5.23",
+    "llama-index-vector-stores-chroma>=0.4.1",
+    "llama-index-utils-workflow>=0.3.0",
+    "llama-index-core>=0.12.8",
+    "tree-sitter>=0.23.2",
+    "tree-sitter-languages>=1.10.2",
+    "ruff>=0.8.4",
+    "duckduckgo-search>=7.1.1",
+    "uuid>=1.30",
+    "pyventus>=0.6.0",
+    "nest-asyncio>=1.6.0",
+    "llama-index-vector-stores-faiss>=0.3.0",
+    "faiss-cpu>=1.9.0.post1",
+    "loguru>=0.7.3",
+    "llama-index-llms-openai>=0.3.12",
+    "llama-index-embeddings-openai>=0.3.1",
+    "sentence-transformers>=3.3.1",
+    "torch>=2.5.1",
+]
