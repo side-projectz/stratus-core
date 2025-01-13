@@ -1,5 +1,5 @@
 import logging
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
@@ -9,15 +9,16 @@ from services.directory import directory_router
 from services.index import index_router
 from services.query import query_router
 from engines.settings import init_settings
-
 import nest_asyncio
+import uvicorn
+import env_config
 
 nest_asyncio.apply()
 
 logger = logging.getLogger("uvicorn")
 logger.setLevel(4)
 
-load_dotenv()
+load_dotenv(find_dotenv())
 init_settings()
 
 
@@ -46,3 +47,14 @@ app.include_router(router=query_router)
 @app.get("/")
 def heartbeat():
     return {"status": "ok"}
+
+
+if __name__ == "__main__":
+    _host = env_config.HOST
+    _port = env_config.PORT
+    _env = env_config.ENVIRONMENT
+
+    print(f"host: {_host}")
+    print(f"port: {_port}")
+    print(f"env: {_env}")
+    uvicorn.run("main:app", host=_host, port=_port, loop="asyncio", log_level="info")

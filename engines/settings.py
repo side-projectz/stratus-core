@@ -54,7 +54,9 @@ def init_ollama():
         os.getenv("OLLAMA_REQUEST_TIMEOUT", DEFAULT_REQUEST_TIMEOUT)
     )
 
-    embed_model = OllamaEmbedding(base_url=BASE_URL, model_name=EMBEDDING_MODEL)
+    embed_model = OllamaEmbedding(
+        base_url=BASE_URL, model_name=EMBEDDING_MODEL, embed_batch_size=50
+    )
     llm_model = Ollama(
         base_url=BASE_URL,
         model=LLM_MODEL,

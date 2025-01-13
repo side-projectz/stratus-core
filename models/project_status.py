@@ -1,9 +1,10 @@
 import logging
-from uuid import UUID, uuid4
+from uuid import UUID
 from enum import Enum
 from datetime import datetime, timezone
 from sqlmodel import Field, SQLModel
 from models import Session, engine
+from utils import generate_uuid
 
 logger = logging.getLogger("uvicorn")
 
@@ -23,11 +24,11 @@ class ProjectStatusBase(SQLModel):
 
 
 class ProjectStatus(ProjectStatusBase, table=True):
-    id: UUID = Field(default=uuid4(), primary_key=True)
+    id: UUID = Field(default_factory=generate_uuid, primary_key=True)
 
 
 class UpdateProjectStatus(SQLModel):
-    id: UUID = Field(default=uuid4())
+    id: UUID = Field(default_factory=generate_uuid)
     status: ProjectStatusEnum
     updated_at: datetime = Field(default=datetime.now(timezone.utc))
 

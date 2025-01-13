@@ -39,10 +39,12 @@ pip install -r requirements.txt
 3. Configure environment variables in the .env file:
 ```
 app_host=127.0.0.1
-app_port=8000
+app_port=8001
 
 RAG_API_KEY="API_KEY"
-RAG_PROVIDER="ollama"
+
+# Optional
+RAG_PROVIDER="ollama" 
 RAG_LLM_MODEL="qwen2.5"
 RAG_EMBEDDING_MODEL="snowflake-arctic-embed2"
 
@@ -56,11 +58,15 @@ uv pip install -r pyproject.toml
 
 Start the Service
 
-Run the FastAPI application using Uvicorn:
+Run the FastAPI application using `uv`:
+```
+uv run main.py
+```
+Run the FastAPI application using `Uvicorn`:
 ```
 uv run uvicorn main:app --host 127.0.0.1 --port 8001 --loop asyncio
 ```
-The service will be available at http://localhost:8000.
+The service will be available at http://localhost:8001.
 
 ### API Endpoints
 

@@ -2,6 +2,7 @@ import logging
 from uuid import UUID
 from fastapi import APIRouter, HTTPException, BackgroundTasks
 from sqlmodel import select
+from pydantic import BaseModel
 
 from models import SessionDep
 
@@ -56,11 +57,17 @@ async def index_project_in_background(project_status_db: ProjectStatus):
     return project_status_db
 
 
+class NewIndexBody(BaseModel):
+    project_id: UUID
+
+
 @index_router.post("/")
 async def start_indexing(
-    project_id: UUID, session: SessionDep, background_tasks: BackgroundTasks
+    index_project: NewIndexBody, session: SessionDep, background_tasks: BackgroundTasks
 ):
-    project = session.get(Project, project_id)
+    print(index_project)
+
+    project = get_project(index_project.project_id)
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
 

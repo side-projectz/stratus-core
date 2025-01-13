@@ -1,5 +1,6 @@
 import logging
-from uuid import UUID, uuid4
+from uuid import UUID
+from utils import generate_uuid
 from sqlmodel import Field, SQLModel, select
 
 from models import Session, engine
@@ -12,7 +13,7 @@ class ProjectBase(SQLModel):
 
 
 class Project(ProjectBase, table=True):
-    id: UUID = Field(default=uuid4(), primary_key=True)
+    id: UUID = Field(default_factory=generate_uuid, primary_key=True)
     name: str = Field(index=True)
 
 

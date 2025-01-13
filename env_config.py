@@ -1,10 +1,17 @@
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 
 
-load_dotenv()
+load_dotenv(find_dotenv())
+
 
 # ======================= APPLICATION_CONFIGURATIONS ========================
+
+HOST = os.getenv("RAG_APP_HOST", "127.0.0.1")
+PORT = int(os.getenv("RAG_APP_PORT", "8001"))
+
+ENVIRONMENT = os.getenv("ENVIRONMENT", "prod")
+
 ROOT_PATH = os.getcwd()
 
 CHROMA_DB_PATH = "/database/vector_store"
