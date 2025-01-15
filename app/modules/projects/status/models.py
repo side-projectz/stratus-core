@@ -1,28 +1,29 @@
+from datetime import datetime
 from enum import Enum
 from uuid import UUID
-from app.utils import generate_uuid, generate_timestamp
-from datetime import datetime
-from sqlmodel import SQLModel, Field
+
+from sqlmodel import Field, SQLModel
+
+from app.utils import generate_timestamp, generate_uuid
 
 
 class ProjectStatusEnum(str, Enum):
-    QUEUE = "queue"
-    PROCESSING = "processing"
-    FAILED = "failed"
-    SUCCESS = "success"
+	QUEUE = "queue"
+	PROCESSING = "processing"
+	FAILED = "failed"
+	SUCCESS = "success"
 
 
 class ProjectStatusBase(SQLModel):
-    project_id: UUID = Field(foreign_key="project.id")
-    status: ProjectStatusEnum = Field(default=ProjectStatusEnum.QUEUE)
+	project_id: UUID = Field(foreign_key="project.id")
+	status: ProjectStatusEnum = Field(default=ProjectStatusEnum.QUEUE)
 
 
 class ProjectStatus(ProjectStatusBase, table=True):
-    id: UUID = Field(default_factory=generate_uuid, primary_key=True)
+	id: UUID = Field(default_factory=generate_uuid, primary_key=True)
 
-    created_at: datetime = Field(default_factory=generate_timestamp)
-    updated_at: datetime = Field(default_factory=generate_timestamp)
+	created_at: datetime = Field(default_factory=generate_timestamp)
+	updated_at: datetime = Field(default_factory=generate_timestamp)
 
 
-
-__all__ =[ProjectStatus, ProjectStatusBase, ProjectStatusEnum]
+__all__ = [ProjectStatus, ProjectStatusBase, ProjectStatusEnum]

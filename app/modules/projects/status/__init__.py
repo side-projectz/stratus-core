@@ -1,5 +1,5 @@
-from .service import ProjectStatusService
+from .models import ProjectStatus, ProjectStatusEnum
 from .schemas import ProjectStatusSchema
-from .models import ProjectStatusEnum, ProjectStatus
+from .service import ProjectStatusService
 
 __all__ = [ProjectStatusService, ProjectStatusSchema, ProjectStatusEnum, ProjectStatus]
