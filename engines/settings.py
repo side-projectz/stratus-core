@@ -2,7 +2,7 @@ import os
 import logging
 from llama_index.core import Settings
 from llama_index.core.constants import DEFAULT_TEMPERATURE
-from env_config import (
+from app.config import (
     LLM_PROVIDER,
     LLM_PROVIDER_BASE_URL,
     LLM_MODEL,

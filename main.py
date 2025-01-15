@@ -5,13 +5,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
 from models import create_db_and_tables
-from services.directory import directory_router
-from services.index import index_router
-from services.query import query_router
 from engines.settings import init_settings
 import nest_asyncio
 import uvicorn
-import env_config
+import app.config as config
+
+from app.modules.projects import project_router
 
 nest_asyncio.apply()
 
@@ -39,9 +38,10 @@ app.add_middleware(
 )
 
 
-app.include_router(router=directory_router)
-app.include_router(router=index_router)
-app.include_router(router=query_router)
+app.include_router(router=project_router)
+# app.include_router(router=directory_router)
+# app.include_router(router=index_router)
+# app.include_router(router=query_router)
 
 
 @app.get("/")
@@ -50,11 +50,11 @@ def heartbeat():
 
 
 if __name__ == "__main__":
-    _host = env_config.HOST
-    _port = env_config.PORT
-    _env = env_config.ENVIRONMENT
+    _host = config.HOST
+    _port = config.PORT
+    _env = config.ENVIRONMENT
 
     print(f"host: {_host}")
     print(f"port: {_port}")
     print(f"env: {_env}")
-    uvicorn.run("main:app", host=_host, port=_port, loop="asyncio", log_level="info")
+    uvicorn.run("main:app", host=_host, port=_port, loop="asyncio", log_level="info", reload= True if _env == "dev" else False)

@@ -1,5 +1,5 @@
-from env_config import ROOT_PATH, CHROMA_DB_PATH
-from env_config import LLM_PROVIDER, LLM_PROVIDER_API_KEY, EMBEDDING_MODEL, LLM_PROVIDER_BASE_URL
+from app.config import ROOT_PATH, CHROMA_DB_PATH
+from app.config import LLM_PROVIDER, LLM_PROVIDER_API_KEY, EMBEDDING_MODEL, LLM_PROVIDER_BASE_URL
 
 import chromadb
 from chromadb.config import Settings as ChromaDbSettings
