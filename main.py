@@ -1,16 +1,18 @@
 import logging
-from dotenv import load_dotenv, find_dotenv
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
-from models import create_db_and_tables
-from engines.settings import init_settings
 import nest_asyncio
 import uvicorn
-import app.config as config
+from dotenv import find_dotenv, load_dotenv
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from models import create_db_and_tables
 
+import app.config as config
+from app.modules.chat import chat_router
+from app.modules.indices import indices_router
 from app.modules.projects import project_router
+from app.shared.settings import init_settings
 
 nest_asyncio.apply()
 
@@ -23,38 +25,44 @@ init_settings()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.debug("[Startup]======================")
-    create_db_and_tables()
-    yield
-    logger.debug("[Shutdown]=====================")
+	logger.debug("[Startup]======================")
+	create_db_and_tables()
+	yield
+	logger.debug("[Shutdown]=====================")
 
 
 app = FastAPI(title="Stratus-Core", lifespan=lifespan)
 app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
+	CORSMiddleware,
+	allow_origins=["*"],
+	allow_methods=["*"],
+	allow_headers=["*"],
 )
 
 
 app.include_router(router=project_router)
-# app.include_router(router=directory_router)
-# app.include_router(router=index_router)
-# app.include_router(router=query_router)
+app.include_router(router=indices_router)
+app.include_router(router=chat_router)
 
 
 @app.get("/")
 def heartbeat():
-    return {"status": "ok"}
+	return {"status": "ok"}
 
 
 if __name__ == "__main__":
-    _host = config.HOST
-    _port = config.PORT
-    _env = config.ENVIRONMENT
+	_host = config.HOST
+	_port = config.PORT
+	_env = config.ENVIRONMENT
 
-    print(f"host: {_host}")
-    print(f"port: {_port}")
-    print(f"env: {_env}")
-    uvicorn.run("main:app", host=_host, port=_port, loop="asyncio", log_level="info", reload= True if _env == "dev" else False)
+	print(f"host: {_host}")
+	print(f"port: {_port}")
+	print(f"env: {_env}")
+	uvicorn.run(
+		"main:app",
+		host=_host,
+		port=_port,
+		loop="asyncio",
+		log_level="info",
+		reload=_env == "dev",
+	)

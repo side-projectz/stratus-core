@@ -1,9 +1,8 @@
 from datetime import datetime, timezone
 from uuid import UUID
 
-from sqlmodel import select
-
 from models import Session, engine
+from sqlmodel import select
 
 from ..models import Project
 from .models import ProjectStatus
@@ -17,7 +16,9 @@ class ProjectStatusService:
 	def get_project_status(self, id: UUID) -> ProjectStatusSchema.ProjectStatusRead:
 		with Session(engine) as session:
 			project_status = session.exec(
-				select(ProjectStatus).where(ProjectStatus.id == id)
+				select(ProjectStatus)
+				.where(ProjectStatus.id == id)
+				.order_by(ProjectStatus.created_at)
 			).first()
 			if not project_status:
 				raise ValueError("Project status not found.")
@@ -30,7 +31,7 @@ class ProjectStatusService:
 	def get_project_status_by_project_id(
 		self,
 		project_id: UUID,
-	) -> ProjectStatusSchema.ProjectStatusList:
+	) -> ProjectStatusSchema.ProjectStatusRead:
 		with Session(engine) as session:
 			project = session.exec(
 				select(Project).where(Project.id == project_id)
@@ -39,7 +40,9 @@ class ProjectStatusService:
 				raise ValueError("Project not found.")
 
 			project_status = session.exec(
-				select(ProjectStatus).where(ProjectStatus.project_id == project_id)
+				select(ProjectStatus)
+				.where(ProjectStatus.project_id == project_id)
+				.order_by(ProjectStatus.created_at.desc())
 			).first()
 		if not project_status:
 			# raise ValueError("Project status not found.")

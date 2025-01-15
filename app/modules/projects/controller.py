@@ -4,6 +4,7 @@ from uuid import UUID
 from fastapi import APIRouter, HTTPException, Query
 
 from app.utils import logger
+from app.utils.emitter import event_emitter
 
 from .schemas import ProjectSchemas
 from .service import ProjectService
@@ -35,7 +36,12 @@ def get_project(project_id: str):
 @project_router.post("/", response_model=ProjectSchemas.ProjectRead)
 def create_project(new_project: ProjectSchemas.ProjectCreate):
 	try:
-		return project_service.create_project(project_data=new_project)
+		project = project_service.create_project(project_data=new_project)
+		status = project_status_service.get_project_status_by_project_id(
+			project_id=project.id
+		)
+		event_emitter.emit("ProjectIndex", project_status_id=status.id)
+		return project
 	except ValueError as e:
 		raise HTTPException(status_code=400, detail=str(e))
 
