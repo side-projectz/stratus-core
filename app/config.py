@@ -11,6 +11,8 @@ HOST = os.getenv("RAG_APP_HOST", "127.0.0.1")
 PORT = int(os.getenv("RAG_APP_PORT", "8001"))
 
 ENVIRONMENT = os.getenv("ENVIRONMENT", "prod")
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
+
 
 ROOT_PATH = os.getcwd()
 

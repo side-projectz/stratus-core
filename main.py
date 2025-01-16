@@ -50,7 +50,7 @@ def heartbeat():
 	return {"status": "ok"}
 
 
-if __name__ == "__main__":
+def server():
 	_host = config.HOST
 	_port = config.PORT
 	_env = config.ENVIRONMENT
@@ -66,3 +66,7 @@ if __name__ == "__main__":
 		log_level="info",
 		reload=_env == "dev",
 	)
+
+
+if __name__ == "__main__":
+	server()
