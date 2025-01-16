@@ -1,8 +1,9 @@
 from datetime import datetime, timezone
 from uuid import UUID
 
-from models import Session, engine
 from sqlmodel import select
+
+from app.database import Session, engine
 
 from ..models import Project
 from .models import ProjectStatus

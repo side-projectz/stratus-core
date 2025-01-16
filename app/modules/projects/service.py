@@ -3,8 +3,8 @@ from uuid import UUID
 
 from sqlmodel import select
 
+from app.database import Session, engine
 from app.utils.git import is_git_repo
-from models import Session, engine
 
 from .models import Project
 from .schemas import ProjectSchemas

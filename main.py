@@ -6,9 +6,9 @@ import uvicorn
 from dotenv import find_dotenv, load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from models import create_db_and_tables
 
 import app.config as config
+from app.database import create_db_and_tables
 from app.modules.chat import chat_router
 from app.modules.indices import indices_router
 from app.modules.projects import project_router
