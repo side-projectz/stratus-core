@@ -4,6 +4,7 @@ from app.modules.projects import (
 	ProjectStatusSchema,
 	ProjectStatusService,
 )
+from app.shared.chroma_db import ChromaDB
 from app.utils import logger
 from app.utils.git import is_git_repo
 
@@ -33,6 +34,10 @@ async def index_project_in_background(args: BackgroundIndexingArgs):
 		)
 		is_git_repo(project.path)
 
+		logger.debug(f"Dropping collection {project.name}")
+		ChromaDB(project.name).drop_collection()
+
+		logger.debug(f"Loading documents from {project.path}")
 		all_documents = load_documents(path=project.path)
 		logger.debug(f"Found {len(all_documents)} documents")
 

@@ -29,8 +29,6 @@ def load_documents(path: str):
 			"*.mp3",
 			"*.wav",
 			"*.map",
-			"*.js",
-			"*.css",
 			"*.json",
 			"*.lock",
 		]
@@ -44,15 +42,10 @@ def load_documents(path: str):
 			exclude=exclude_list,
 		)
 		documents = loader.load_data()
-
 		filtered_docs = exclude_ignored_documents(directory=path, documents=documents)
 
 		for doc in filtered_docs:
-			content = doc.text
-			metadata = (
-				f"""[{doc.metadata['file_name']}]( {doc.metadata['file_path']} ) \n"""
-			)
-			doc.set_content(metadata + content)
+			doc.metadata["file_path"] = doc.metadata["file_path"].replace(path, "")
 
 		return filtered_docs
 
