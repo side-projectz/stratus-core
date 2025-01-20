@@ -40,8 +40,8 @@ def init_settings():
 		case _:
 			raise ValueError(f"Invalid model provider: {LLM_PROVIDER}")
 
-	Settings.chunk_size = int(CHUNK_SIZE or "1024")
-	Settings.chunk_overlap = int(CHUNK_OVERLAP or "20")
+	Settings.chunk_size = int(CHUNK_SIZE or "2048")
+	Settings.chunk_overlap = int(CHUNK_OVERLAP or "48")
 
 	return llm, embed_model
 
