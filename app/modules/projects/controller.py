@@ -34,7 +34,7 @@ def get_project(project_id: str):
 
 
 @project_router.post("/", response_model=ProjectSchemas.ProjectRead)
-def create_project(new_project: ProjectSchemas.ProjectCreate):
+async def create_project(new_project: ProjectSchemas.ProjectCreate):
 	try:
 		project = project_service.create_project(project_data=new_project)
 		status = project_status_service.get_project_status_by_project_id(
