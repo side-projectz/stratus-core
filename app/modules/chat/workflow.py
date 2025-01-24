@@ -1,5 +1,4 @@
 import dspy
-from dspy import Prediction
 from fastapi.exceptions import HTTPException
 from llama_index.core import QueryBundle
 from llama_index.core.postprocessor import SentenceTransformerRerank

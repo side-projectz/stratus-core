@@ -12,6 +12,7 @@ from app.database import create_db_and_tables
 from app.modules.chat import chat_router
 from app.modules.indices import indices_router
 from app.modules.projects import project_router
+from app.modules.questions import generate_router
 from app.shared.settings import init_settings
 
 nest_asyncio.apply()
@@ -43,6 +44,7 @@ app.add_middleware(
 app.include_router(router=project_router)
 app.include_router(router=indices_router)
 app.include_router(router=chat_router)
+app.include_router(router=generate_router)
 
 
 @app.get("/")

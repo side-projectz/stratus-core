@@ -3,7 +3,6 @@ import os
 from llama_index.core.constants import DEFAULT_TEMPERATURE
 from llama_index.llms.ollama import Ollama
 from llama_index.llms.openai import OpenAI
-from llama_index.llms.openai.base import DEFAULT_OPENAI_MODEL
 
 from app.config import (
 	LLM_MAX_TOKENS,
@@ -41,7 +40,7 @@ def init_openai_llm():
 
 	llm_model = OpenAI(
 		api_key=LLM_PROVIDER_API_KEY,
-		model=LLM_MODEL or DEFAULT_OPENAI_MODEL,
+		model=LLM_MODEL or "gpt-4o-mini",
 		context_window=DEFAULT_CONTEXT_WINDOW,
 		temperature=float(LLM_TEMPERATURE or DEFAULT_TEMPERATURE),
 		max_tokens=int(LLM_MAX_TOKENS or "1024"),
